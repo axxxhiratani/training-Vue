@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div :class="main.className" @click="clicked">
+        <button @click="clicked" id="open">開く</button>
+        <div :class="modal.className" id="modalwindow">
+          <p class="modalTitle" id="modalwindow--title">モーダルウィンドウ</p>
+          <button class="closeButton" id="close" @click="clicked">
+            閉じる
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data() {
+          return {
+            main: {
+              className: "showMainWindow",
+            },
+            modal: {
+              className: "closeModalWindow",
+            },
+          };
+        },
+        methods: {
+          clicked: function (e) {
+            if (
+              e.target.id === "open" ||
+              e.target.id === "modalwindow" ||
+              e.target.id === "modalwindow--title"
+            ) {
+              this.showModal();
+            } else if (e.target.id === "close") {
+              this.closeModal();
+            } else {
+              this.closeModal();
+            }
+          },
+          showModal: function () {
+            this.main.className = "closeMainWindow";
+            this.modal.className = "showModalWindow";
+          },
+          closeModal: function () {
+            this.main.className = "showMainWindow";
+            this.modal.className = "closeModalWindow";
+          },
+        },
+        filters: {},
+        computed: {},
+      });
+    </script>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        height: 1000px;
+      }
+      .showMainWindow {
+        background: white;
+        min-height: 100vh;
+        width: 100%;
+      }
+      .closeMainWindow {
+        background: gray;
+        min-height: 100vh;
+        width: 100%;
+      }
+      .showModalWindow {
+        display: inline-block;
+        width: 50%;
+        height: auto;
+        background: white;
+        padding: 30px 0px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+      }
+      .closeModalWindow {
+        display: none;
+      }
+      .modalTitle {
+        display: block;
+        font-weight: bold;
+        margin: 20px auto;
+        margin-top: 20px;
+        text-align: center;
+      }
+      .closeButton {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </body>
+</html>

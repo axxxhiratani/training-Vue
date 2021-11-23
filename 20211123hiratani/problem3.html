@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+
+  <body>
+
+      <div id="app">
+        <div class="container">
+          <input type="text" class="input" v-model="searchName"></input>
+          <ul>
+            <li v-for="name in showName">
+                {{name}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data() {
+          return {
+            searchName:"",
+            nameList:[
+            "佐藤",
+            "山田",
+            "鈴木",
+            "田中"
+            ],
+            showList:[],
+          };
+        },
+        methods: {
+          search:function(){
+            let list = [];
+            if(this.searchName ==""){
+              this.nameList.forEach(function(name){
+                list.push(name);
+              });
+              return list;
+            }else{
+              targetName = this.searchName;
+              this.nameList.forEach(function(name){
+                if(name.includes(targetName)){
+                  list.push(name);
+                }
+              });
+              return list;
+            }
+          }
+        },
+        filters: {
+        },
+        computed: {
+          showName:function(){
+            this.showList = this.search();
+            return this.showList;
+          },
+        }
+      });
+    </script>
+    <style>
+    .input{
+      border:2px solid #3cb371;
+    }
+    .container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+    ul > li{
+      list-style:none;
+    }
+    </style>
+  </body>
+</html>

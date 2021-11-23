@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h2>理解度</h2>
+      <div v-for="item in studys">{{item.subject + item.score}}</div>
+      <h2>好きなのフルーツ一覧</h2>
+      <div v-for="fruit in likeFruits">{{fruit}}</div>
+      <h2>フルーツ一覧</h2>
+      <div v-for="item in items">{{item}}</div>
+
+      <h2>生徒情報</h2>
+      <div v-for="(value, key) in user">{{key}}：{{value}}</div>
+
+      <h2>生徒情報一覧</h2>
+      <div v-for="user in userList">
+        <p>名前：{{user.name}}</p>
+        <p>性別：{{user.sex}}</p>
+        <p>USER_ID：{{user.id}}</p>
+      </div>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data() {
+          return {
+            // 配列
+            items: ["apple", "banana", "orange", "grape"],
+            // オブジェクト
+            user: {
+              name: "生徒A",
+              sex: "男",
+              id: "46cfb9ae-89d7-2790-0caa-7e578005ffd6",
+            },
+            // 配列の中のオブジェクト
+            userList: [
+              {
+                name: "生徒A",
+                sex: "男",
+                id: "46cfb9ae-89d7-2790-0caa-7e578005ffd6",
+              },
+              {
+                name: "生徒B",
+                sex: "女",
+                id: "7c42c0fa-18e8-20af-ebd1-c1bf9faa6466",
+              },
+              {
+                name: "生徒C",
+                sex: "女",
+                id: "3f821233-3c39-90ec-f124-bf59bd2224f0",
+              },
+            ],
+            likeFruits: ["リンゴ", "イチジク", "パイン", "ブドウ"],
+            studys: [
+              {
+                subject: "HTML",
+                score: "60",
+              },
+              {
+                subject: "CSS",
+                score: "40",
+              },
+              {
+                subject: "JavaScript",
+                score: "60",
+              },
+            ],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(fruit,index) in fruits" :key="fruit.name">
+          <p>商品名：{{fruit.name}}</p>
+          <p>1つあたりの重さ：{{fruit.weight}}</p>
+          <p :style="errorOneStyle">個数：{{fruit.num}}</p>
+          <p><input v-model.number="fruit.num"></input></p>
+          <button @click="plus(index)">1つ追加</button>
+        </li>
+      </ul>
+      <p :style="errorStyle">合計個数：{{sumFruitNum}}</p>
+      <p>合計の重さ：{{sumFruitWeight | Fruit}}</p>
+      <p v-show="!checkFruitNum">10個未満で表示される</p>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        created: function(){
+          console.log("created");
+          console.log(this.$el);
+        },
+        mounted:function(){
+          console.log("mounted");
+          console.log(this.$el);
+        },
+        data: {
+          apple: {
+            name: "apple",
+            weight: 100,
+            num: 8,
+          },
+          fruits: [
+            {
+              name: "apple",
+              weight: 100,
+              num: 2,
+            },
+            {
+              name: "apple2",
+              weight: 100,
+              num: 5,
+            },
+            {
+              name: "apple3",
+              weight: 100,
+              num: 1,
+            },
+          ],
+        },
+        methods:{
+          plus:function(index){
+            this.fruits[index].num++;
+          },
+        },
+        filters: {
+          Fruit: function (value) {
+            return value * 1;
+          },
+        },
+        computed: {
+          sumFruitWeight: function () {
+            return this.fruits.reduce(function (sum, fruit) {
+              return sum + fruit.num * fruit.weight;
+            }, 0);
+          },
+          sumFruitNum: function () {
+            return this.fruits.reduce(function (sum, fruit) {
+              return sum + fruit.num;
+            }, 0);
+          },
+
+          sumWeight: function () {
+            return this.fruit.weight * this.fruit.num;
+          },
+          checkFruitNum: function () {
+            return this.sumFruitNum > 10;
+          },
+          checkOneFruitNum: function (num) {
+            return this.fruit > 5;
+          },
+          errorStyle: function () {
+            return {
+              color: !this.checkFruitNum ? "red" : "blue",
+            };
+          },
+          errorOneStyle: function () {
+            return {
+              color: !this.checkOneFruitNum ? "red" : "blue",
+            };
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
