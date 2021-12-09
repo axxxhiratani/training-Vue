@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>ToDoアプリ</h1>
+      タスク名：
+      <input type="text" class="input" v-model="name"></input>
+      推定時間（分）：
+      <input type="text" class="input" v-model="min"></input>
+
+        <button @click="addTodo">追加</button>
+
+      <p>　　タスク　　　　推定時間（分）</p>
+
+
+      <sample-component :todo-list="todo"></sample-component>
+    </div>
+    <script>
+      Vue.component("sample-component", {
+        props: {
+          todoList: {
+            
+          },
+        },
+        template: "<ul><li v-for='todo in todoList' :key='todo'>{{todo.name}}　　　　　　{{todo.min}}</li></ul>",
+      });
+      new Vue({
+        el: "#app",
+        data: {
+          fruit: "リンゴ",
+          name:"",
+          min:60,
+          todo:[
+          {
+            name:"掃除",
+            min:90,
+          }
+          ],
+        },
+        methods:{
+          addTodo(){
+            data = {
+              name:this.name,
+              min:this.min
+            };
+            this.todo.push(data);
+            this.name = "";
+            this.min = 60;
+          }
+        }
+      });
+    </script>
+    <style>
+      li{
+        list-style:none;
+      }
+    </style>
+  </body>
+</html>

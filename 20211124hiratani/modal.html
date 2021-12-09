@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+
+<body>
+  <div id="modal">
+    <button v-on:click="toggleIsShowModal">開く</button>
+    <modal-content
+      v-on:click.native.self="toggleIsShowModal"
+      v-show="isShowModal"
+    />
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#modal',
+      data: {
+        isShowModal: false,
+      },
+      methods: {
+        toggleIsShowModal: function(){
+          this.isShowModal = !this.isShowModal;
+        }
+      }
+    });
+
+
+    Vue.component('modal-content', {
+      template: `
+        <div class="modal">
+          <div class="modal-bg">
+            <h2>モーダルウィンドウ</h2>
+            <button v-on:click="closeModal">閉じる</button>
+          </div>
+        </div>
+      `,
+      methods: {
+        closeModal: function(){
+          vm.isShowModal = false;
+        }
+      }
+    });
+
+
+  </script>
+  <style>
+    .modal{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .2);
+    }
+    .modal-wrap{
+      position: relative;
+    }
+    .modal-bg{
+      width: 600px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 50px 0;
+      text-align: center;
+      background: #fff;
+    }
+  </style>
+</body>
+</html>

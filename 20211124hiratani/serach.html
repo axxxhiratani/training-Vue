@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+
+<body>
+  <div id="search">
+    <input type="text" v-model="keyword">
+    <div v-for="user in filteredUsers" :key="user.id">{{user.name}}</div>
+  </div>
+  <script>
+    const users = [
+      {
+        name: "佐藤",
+        id: 1,
+      },
+      {
+        name: "山田",
+        id: 2,
+      },
+      {
+        name: "鈴木",
+        id: 3,
+      },
+      {
+        name: "田中",
+        id: 4,
+      }
+    ];
+
+
+    const vm = new Vue({
+      el: '#search',
+      data: {
+        users,
+        keyword: '',
+      },
+      computed: {
+        filteredUsers: function() {
+          const filteredUsers = this.users.filter((u) => u.name.includes(this.keyword));
+          return filteredUsers;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

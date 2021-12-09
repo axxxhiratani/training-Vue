@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+
+<body>
+  <div id="tab">
+    <div class="tab-wrap">
+      <tab-title
+        v-for="tab in tabs"
+        :key="tab.id"
+        :name="tab.name"
+        :id="tab.id"
+        :active-tab-id="activeTabId"
+        v-on:click.native="updateTab(tab.id)"
+      />
+    </div>
+    <div class="tab-content">
+      <tab-content
+        v-for="tab in tabs"
+        :key="tab.id"
+        :content="tab.content"
+        :id="tab.id"
+        :active-tab-id="activeTabId"
+      />
+    </div>
+  </div>
+  <script>
+    const tabs = [
+      {
+        name: 'タブ1',
+        id: 1,
+        content: 'コンテンツ１'
+      },
+      {
+        name: 'タブ2',
+        id: 2,
+        content: 'コンテンツ2'
+      },
+      {
+        name: 'タブ3',
+        id: 3,
+        content: 'コンテンツ3'
+      },
+    ];
+
+
+    Vue.component('tab-title', {
+      props: {
+        name: {
+          type: String,
+          required: true,
+        },
+        id: {
+          type: Number,
+          required: true,
+        },
+        activeTabId: {
+          type: Number,
+          required: true,
+        },
+      },
+      template: '<div class="tab" :class="{active: id === activeTabId}">{{name}}</div>',
+    });
+
+
+    Vue.component('tab-content', {
+      props: {
+        content: {
+          type: String,
+          required: true,
+        },
+        id: {
+          type: Number,
+          required: true,
+        },
+        activeTabId: {
+          type: Number,
+          required: true,
+        },
+      },
+      template: '<div v-if="id === activeTabId">{{content}}</div>',
+    });
+    
+    new Vue({
+      el: '#tab',
+      data: {
+        tabs,
+        activeTabId: tabs[0].id,
+      },
+      methods: {
+        updateTab: function(id){
+          this.activeTabId = id;
+        }
+      }
+    });
+  </script>
+  <style>
+    .tab-wrap{
+      display: flex;
+    }
+    .tab{
+      width: 100px;
+      text-align: center;
+      color: #000;
+      background: #fff;
+      border: 1px solid #f2f2f2;
+    }
+    .active{
+      color: #fff;
+      background: #000;
+    }
+    .tab-content{
+      width: 100%;
+    }
+  </style>
+</body>
+</html>
